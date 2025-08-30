@@ -1,0 +1,13 @@
+Python For Loops are used for iterating over a sequence like lists, tuples, strings, and ranges.
+
+For loop allows you to apply the same operation to every item within loop.
+Using For Loop avoid the need of manually managing the index.
+For loop can iterate over any iterable object, such as dictionary, list or any custom iterators.
+
+s = ["Geeks", "for", "Geeks"]
+# using for loop with string
+for i in s:
+    print(i)
+
+for i in range(0, 10, 2):
+    print(i)
