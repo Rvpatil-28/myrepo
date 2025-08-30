@@ -1,0 +1,11 @@
+VARIABLE-
+        Variables are used to store data that can be referenced and manipulated during program execution. A variable is essentially a name that is assigned to a value. 
+
+# Variable 'x' stores the integer value 10
+x = 5
+
+# Variable 'name' stores the string "Samantha"
+name = "Samantha"  
+
+print(x)                          // 5
+print(name)                       // Samantha
