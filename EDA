@@ -1,0 +1,40 @@
+    import pandas as pd
+    import seaborn as sns
+    import matplotlib.pyplot as plt
+
+    # Load the Iris dataset
+    df = sns.load_dataset('iris')
+
+    # Display the first few rows
+    print("First 5 rows of the dataset:")
+    print(df.head())
+
+    # Check for missing values
+    print("\nMissing values per column:")
+    print(df.isnull().sum())
+
+    # Get basic descriptive statistics
+    print("\nDescriptive statistics:")
+    print(df.describe())
+
+
+    # Histograms for numerical features                  // Univariate Analysis (Individual Feature Exploration).
+    df.hist(bins=20, figsize=(10, 8), color='skyblue')
+    plt.suptitle('Histograms of Numerical Features', y=1.02)
+    plt.tight_layout(rect=[0, 0.03, 1, 0.98])
+    plt.show()
+
+    # Boxplot for a specific feature grouped by a categorical variable
+    plt.figure(figsize=(8, 6))
+    sns.boxplot(x='species', y='sepal_length', data=df)
+    plt.title('Sepal Length Distribution by Species')
+    plt.show()
+
+sns.set_palette("Pastel1")
+
+plt.figure(figsize=(10, 6))
+
+sns.pairplot(df)
+
+plt.suptitle('Pair Plot for DataFrame')
+plt.show()
