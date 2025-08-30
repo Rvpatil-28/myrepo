@@ -1,0 +1,32 @@
+s = "GeeksforGeeks"                // Indexing
+
+# Accesses first character: 'G'
+print(s[0])  
+
+# Accesses 5th character: 's'
+print(s[-4])
+
+# Retrieves characters from index 1 to 3: 'eek'          // String Slicing
+print(s[1:4])
+
+# Reverse a string
+print(s[::-1])
+
+s = "GeeksforGeeks"
+print(len(s))    # output: 13
+
+s = "Hello World"
+print(s.upper())   # output: HELLO WORLD
+print(s.lower())   # output: hello world
+
+s = "   Gfg   "          # Removes spaces from both ends
+print(s.strip())    
+
+s = "Python is fun"      # Replaces 'fun' with 'awesome'
+print(s.replace("fun", "awesome"))
+
+# swaps the case of all characters in the string
+# upper case character to lowercase and viceversa
+print("\nConverted String:")
+print(text.swapcase())
+
