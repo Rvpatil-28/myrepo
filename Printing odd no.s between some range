@@ -1,0 +1,7 @@
+def find_odd_numbers_with_loop(start, end):
+    print(f"Odd numbers between {start} and {end} are:")
+    for number in range(start, end + 1):
+        if number % 2 != 0:
+            print(number)
+
+find_odd_numbers_with_loop(10, 25)
