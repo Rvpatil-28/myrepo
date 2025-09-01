@@ -1,3 +1,5 @@
+EDA- is a important step in data analysis which focuses on understanding patterns, trends and relationships through statistical tools and visualizations. 
+
     import pandas as pd
     import seaborn as sns
     import matplotlib.pyplot as plt
