@@ -1,0 +1,87 @@
+pip install pandas numpy matplotlib seaborn requests opendatasets plotly          // import library
+import matplotlib.pyplot as plt
+import opendatasets as od
+import seaborn as sns
+
+# Example CPCB dataset from Kaggle (replace with actual dataset link if needed)
+od.download("https://www.kaggle.com/datasets/rohanrao/air-quality-data-in-india-2015-2020")
+
+import requests
+import pandas as pd
+
+# Example: Fetch PM2.5 data from Delhi (OpenAQ API)
+url = "https://api.openaq.org/v2/measurements"
+params = {
+    "city": "Delhi",
+    "parameter": "pm25",
+    "limit": 1000,
+    "sort": "desc",
+    "order_by": "datetime"
+}
+
+response = requests.get(url, params=params).json()
+data = response['results']
+
+df_openaq = pd.DataFrame([{
+    "datetime": d["date"]["utc"],
+    "location": d["location"],
+    "parameter": d["parameter"],
+    "value": d["value"],
+    "unit": d["unit"]
+} for d in data])
+
+df_openaq['datetime'] = pd.to_datetime(df_openaq['datetime'])
+print(df_openaq.head())
+
+# Example with CPCB dataset                                              // preprocessing
+df_cpcb = pd.read_csv("city_day.csv")   # example file
+df_cpcb['Date'] = pd.to_datetime(df_cpcb['Date'])
+df_cpcb = df_cpcb.set_index('Date')
+
+# Handle missing values
+df_cpcb = df_cpcb.fillna(method="ffill")
+
+# Keep only pollutants
+pollutants = ['PM2.5', 'PM10', 'NO2', 'CO', 'SO2', 'O3']
+df_pollutants = df_cpcb[pollutants]
+
+                                       
+df_pollutants.plot(figsize=(12,6))                       // Exploratory Data Analysis
+plt.title("Pollutant Trends Over Time")
+plt.ylabel("Concentration (µg/m³)")
+plt.show()
+
+
+plt.figure(figsize=(8,6))                                        // Correlation Heatmap
+sns.heatmap(df_pollutants.corr(), annot=True, cmap="coolwarm")
+plt.title("Correlation Between Pollutants")
+plt.show()
+
+# Daily average                                                  // resampling data
+df_daily = df_pollutants.resample('D').mean()
+
+# Weekly average
+df_weekly = df_pollutants.resample('W').mean()
+
+# Monthly average
+df_monthly = df_pollutants.resample('M').mean()
+
+
+df_features = df_daily.copy()                                       // Forecasting
+
+# Lag features (previous day values)
+for pollutant in pollutants:
+    df_features[f"{pollutant}_lag1"] = df_features[pollutant].shift(1)
+    df_features[f"{pollutant}_lag7"] = df_features[pollutant].shift(7)
+
+# Rolling mean (7-day window)
+for pollutant in pollutants:
+    df_features[f"{pollutant}_roll7"] = df_features[pollutant].rolling(7).mean()
+
+# Time-based features
+df_features['dayofweek'] = df_features.index.dayofweek
+df_features['month'] = df_features.index.month
+
+# Drop NA from lagging/rolling
+df_features = df_features.dropna()
+print(df_features.head())
