@@ -1,3 +1,7 @@
+Data preprocessing is the first step in any data analysis or machine learning pipeline. It involves cleaning, transforming
+and organizing raw data into a structured format to ensure accuracy, consistency and readiness for modelling. This step
+improves data quality and directly impacts the performance of analytical or predictive models.
+
 # importing libraries
 import pandas as pd
 import scipy
